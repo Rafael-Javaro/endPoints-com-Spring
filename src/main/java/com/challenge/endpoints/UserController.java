@@ -36,9 +36,12 @@ public class UserController {
 
     @GetMapping("/acceleration/{name}")
     public List<User> findUserByAccelerationId(@PathParam("name") String name) {
-        List<User> usersList = this.userService.findByAccelerationName(name);
-        return usersList.isEmpty() ? (List<User>) new ResourceNotFoundException("Users from " + name)
-                : usersList;
+        return this.userService.findByAccelerationName(name);
+    }
+
+    @GetMapping("/company/{id}")
+    public List<User> findUserByCompanyId(@PathVariable("id") Long id) {
+        return this.userService.findByCompanyId(id);
     }
 
 }
