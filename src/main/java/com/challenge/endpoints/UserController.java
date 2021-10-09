@@ -1,18 +1,12 @@
 package com.challenge.endpoints;
-
 import com.challenge.entity.User;
 import com.challenge.repository.UserRepository;
 import com.challenge.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import javax.websocket.server.PathParam;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/user")
@@ -24,24 +18,19 @@ public class UserController {
     @Autowired
     UserRepository userRepository;
 
-    @GetMapping
-    public Iterable<User> findAll() { return this.userRepository.findAll(); }
-
     @GetMapping("/{id}")
-    public ResponseEntity<User> findUserById(@PathVariable("id") Long id) {
-        return new ResponseEntity<>(this.userService.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("User")
-        ), HttpStatus.OK);
+    public Optional<User> findById(@PathVariable("id") Long id) {
+        return this.userService.findById(id);
     }
 
-    @GetMapping("/acceleration/{name}")
-    public List<User> findUserByAccelerationId(@PathParam("name") String name) {
-        return this.userService.findByAccelerationName(name);
+    @GetMapping(params = "accelerationName")
+    public List<User> findByAccelerationId(@RequestParam String accelerationName) {
+        return this.userService.findByAccelerationName(accelerationName);
     }
 
-    @GetMapping("/company/{id}")
-    public List<User> findUserByCompanyId(@PathVariable("id") Long id) {
-        return this.userService.findByCompanyId(id);
+    @GetMapping(params = "companyId")
+    public List<User> findByCompanyId(@RequestParam Long companyId) {
+       return this.userService.findByCompanyId(companyId);
     }
 
 }
