@@ -1,5 +1,6 @@
 package com.challenge.service.impl;
 
+import com.challenge.dto.CandidateDTO;
 import com.challenge.entity.Candidate;
 import com.challenge.repository.CandidateRepository;
 import com.challenge.service.interfaces.CandidateServiceInterface;
@@ -14,6 +15,7 @@ import java.util.Optional;
 public class CandidateService implements CandidateServiceInterface {
 
     private CandidateRepository candidateRepository;
+
 
     @Override
     public Optional<Candidate> findById(Long userId, Long companyId, Long accelerationId) {
